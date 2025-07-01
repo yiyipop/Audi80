@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фотогалерея Audi 80 Club - Лучшие фото от участников</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gallery-hero {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+        }
+        
+        .gallery-filter-enhanced {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .filter-btn-enhanced {
+            padding: 12px 24px;
+            border: 2px solid #ea580c;
+            background: transparent;
+            color: #ea580c;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn-enhanced.active,
+        .filter-btn-enhanced:hover {
+            background: #ea580c;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(234, 88, 12, 0.3);
+        }
+        
+        .gallery-grid-enhanced {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .gallery-item-enhanced {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item-enhanced:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item-enhanced img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item-enhanced:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay-enhanced {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item-enhanced:hover .gallery-overlay-enhanced {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .gallery-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .gallery-category {
+            background: #ea580c;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+        
+        .gallery-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ea580c;
+            margin-bottom: 0.5rem;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        .lightbox-prev {
+            left: -60px;
+        }
+        
+        .lightbox-next {
+            right: -60px;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid-enhanced {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .gallery-filter-enhanced {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn-enhanced {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .gallery-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-car"></i>
+                <span>Audi 80 Club</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="models.html" class="nav-link">Модели</a>
+                <a href="gallery.html" class="nav-link">Галерея</a>
+                <a href="tuning.html" class="nav-link">Тюнинг</a>
+                <a href="forum.html" class="nav-link">Форум</a>
+                <a href="blog.html" class="nav-link">Блог</a>
+                <a href="about.html" class="nav-link">О нас</a>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <h1>Фотогалерея Audi 80</h1>
+            <p>Лучшие фотографии автомобилей от участников клуба</p>
+        </div>
+    </section>
+
+    <!-- Gallery Stats -->
+    <section class="container" style="padding: 80px 0 40px;">
+        <div class="gallery-stats">
+            <div class="stat-box">
+                <div class="stat-number">1,247</div>
+                <div>Фотографий</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">342</div>
+                <div>Участников</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">89</div>
+                <div>Тюнинг проектов</div>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="gallery-filter-enhanced">
+            <button class="filter-btn-enhanced active" data-filter="all">
+                <i class="fas fa-images"></i> Все фото
+            </button>
+            <button class="filter-btn-enhanced" data-filter="b1">
+                <i class="fas fa-car"></i> B1 (1965-1972)
+            </button>
+            <button class="filter-btn-enhanced" data-filter="b2">
+                <i class="fas fa-car"></i> B2 (1972-1979)
+            </button>
+            <button class="filter-btn-enhanced" data-filter="b3">
+                <i class="fas fa-car"></i> B3 (1979-1986)
+            </button>
+            <button class="filter-btn-enhanced" data-filter="b4">
+                <i class="fas fa-car"></i> B4 (1986-1996)
+            </button>
+            <button class="filter-btn-enhanced" data-filter="tuning">
+                <i class="fas fa-wrench"></i> Тюнинг
+            </button>
+            <button class="filter-btn-enhanced" data-filter="restoration">
+                <i class="fas fa-tools"></i> Реставрация
+            </button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid-enhanced" id="galleryGrid">
+            <!-- Gallery items will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImage(-1)">❮</button>
+            <img id="lightboxImage" src="" alt="">
+            <button class="lightbox-nav lightbox-next" onclick="changeLightboxImage(1)">❯</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Audi 80 Club Russia</h3>
+                    <p>Официальное сообщество любителей и владельцев Audi 80 всех поколений в России.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Быстрые ссылки</h4>
+                    <ul>
+                        <li><a href="models.html">Модели</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="tuning.html">Тюнинг</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Поколения</h4>
+                    <ul>
+                        <li><a href="models.html#b1">Audi 80 B1 (1965-1972)</a></li>
+                        <li><a href="models.html#b2">Audi 80 B2 (1972-1979)</a></li>
+                        <li><a href="models.html#b3">Audi 80 B3 (1979-1986)</a></li>
+                        <li><a href="models.html#b4">Audi 80 B4 (1986-1996)</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@audi80club.ru</p>
+                        <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Audi 80 Club Russia. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Реклама</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="gallery.js"></script>
+</body>
+</html>

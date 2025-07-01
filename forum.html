@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум Audi 80 Club - Обсуждение и помощь</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .forum-hero {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+        }
+        
+        .forum-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #ea580c;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .forum-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .forum-categories {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .category-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .category-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .category-item:last-child {
+            border-bottom: none;
+        }
+        
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .category-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .category-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        
+        .forum-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-widget {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .online-users {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .user-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ea580c, #dc2626);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+        
+        .user-status {
+            font-size: 0.8rem;
+            color: #10b981;
+        }
+        
+        .recent-topics {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .topic-item {
+            padding: 1rem;
+            border-left: 3px solid #ea580c;
+            background: #f9fafb;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .topic-item:hover {
+            background: #f3f4f6;
+            transform: translateX(5px);
+        }
+        
+        .topic-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .topic-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+        
+        .forum-search {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #ea580c;
+            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+        
+        .create-topic-btn {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .create-topic-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3);
+        }
+        
+        .forum-breadcrumb {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb-item {
+            color: #ea580c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb-item:hover {
+            color: #dc2626;
+        }
+        
+        .breadcrumb-separator {
+            color: #9ca3af;
+        }
+        
+        @media (max-width: 768px) {
+            .forum-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .forum-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .category-item {
+                padding: 1rem 1.5rem;
+            }
+            
+            .sidebar-widget {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-car"></i>
+                <span>Audi 80 Club</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="models.html" class="nav-link">Модели</a>
+                <a href="gallery.html" class="nav-link">Галерея</a>
+                <a href="tuning.html" class="nav-link">Тюнинг</a>
+                <a href="forum.html" class="nav-link">Форум</a>
+                <a href="blog.html" class="nav-link">Блог</a>
+                <a href="about.html" class="nav-link">О нас</a>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="forum-hero">
+        <div class="container">
+            <h1><i class="fas fa-comments"></i> Форум Audi 80 Club</h1>
+            <p>Место для общения, советов и обмена опытом</p>
+        </div>
+    </section>
+
+    <!-- Forum Stats -->
+    <section class="container" style="padding: 80px 0 40px;">
+        <div class="forum-stats">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-number">15,234</div>
+                <div>Участников</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-comments"></i></div>
+                <div class="stat-number">87,456</div>
+                <div>Сообщений</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-book"></i></div>
+                <div class="stat-number">12,567</div>
+                <div>Тем</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                <div class="stat-number">234</div>
+                <div>Онлайн</div>
+            </div>
+        </div>
+
+        <!-- Breadcrumb -->
+        <div class="forum-breadcrumb">
+            <div class="breadcrumb-list">
+                <a href="index.html" class="breadcrumb-item">Главная</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-item">Форум</span>
+            </div>
+        </div>
+
+        <!-- Forum Search -->
+        <div class="forum-search">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Поиск по форуму..." id="forumSearch">
+        </div>
+
+        <!-- Forum Layout -->
+        <div class="forum-layout">
+            <!-- Main Forum Content -->
+            <div class="forum-main">
+                <button class="create-topic-btn" onclick="createNewTopic()">
+                    <i class="fas fa-plus"></i>
+                    Создать новую тему
+                </button>
+
+                <!-- Forum Categories -->
+                <div class="forum-categories">
+                    <div class="category-header">
+                        <i class="fas fa-list"></i>
+                        Разделы форума
+                    </div>
+                    
+                    <div class="category-item" onclick="openCategory('general')">
+                        <div class="category-title">
+                            <i class="fas fa-comments"></i>
+                            Общие вопросы
+                        </div>
+                        <div class="category-description">
+                            Общение, знакомство, обсуждение всего связанного с Audi 80
+                        </div>
+                        <div class="category-meta">
+                            <span>2,345 тем • 23,456 сообщений</span>
+                            <span>Последнее: сегодня, 14:23</span>
+                        </div>
+                    </div>
+
+                    <div class="category-item" onclick="openCategory('technical')">
+                        <div class="category-title">
+                            <i class="fas fa-wrench"></i>
+                            Техническая помощь
+                        </div>
+                        <div class="category-description">
+                            Ремонт, диагностика, техническая поддержка
+                        </div>
+                        <div class="category-meta">
+                            <span>3,567 тем • 45,678 сообщений</span>
+                            <span>Последнее: сегодня, 13:45</span>
+                        </div>
+                    </div>
+
+                    <div class="category-item" onclick="openCategory('tuning')">
+                        <div class="category-title">
+                            <i class="fas fa-cog"></i>
+                            Тюнинг и доработки
+                        </div>
+                        <div class="category-description">
+                            Доработки, тюнинг, внешние изменения
+                        </div>
+                        <div class="category-meta">
+                            <span>1,234 темы • 15,678 сообщений</span>
+                            <span>Последнее: сегодня, 12:30</span>
+                        </div>
+                    </div>
+
+                    <div class="category-item" onclick="openCategory('spare-parts')">
+                        <div class="category-title">
+                            <i class="fas fa-shopping-cart"></i>
+                            Запчасти и продажа
+                        </div>
+                        <div class="category-description">
+                            Покупка, продажа, обмен запчастей
+                        </div>
+                        <div class="category-meta">
+                            <span>4,567 тем • 34,567 сообщений</span>
+                            <span>Последнее: сегодня, 11:15</span>
+                        </div>
+                    </div>
+
+                    <div class="category-item" onclick="openCategory('gallery-discuss')">
+                        <div class="category-title">
+                            <i class="fas fa-camera"></i>
+                            Фотогалерея
+                        </div>
+                        <div class="category-description">
+                            Фотографии автомобилей, встречи, мероприятия
+                        </div>
+                        <div class="category-meta">
+                            <span>567 тем • 8,901 сообщение</span>
+                            <span>Последнее: сегодня, 10:45</span>
+                        </div>
+                    </div>
+
+                    <div class="category-item" onclick="openCategory('events')">
+                        <div class="category-title">
+                            <i class="fas fa-calendar"></i>
+                            Мероприятия и встречи
+                        </div>
+                        <div class="category-description">
+                            Организация встреч, автопробегов, мероприятий
+                        </div>
+                        <div class="category-meta">
+                            <span>234 темы • 3,456 сообщений</span>
+                            <span>Последнее: вчера, 20:30</span>
+                        </div>
+                    </div>
+
+                    <div class="category-item" onclick="openCategory('off-topic')">
+                        <div class="category-title">
+                            <i class="fas fa-coffee"></i>
+                            Оффтопик
+                        </div>
+                        <div class="category-description">
+                            Обсуждение тем не связанных с автомобилями
+                        </div>
+                        <div class="category-meta">
+                            <span>1,890 тем • 25,678 сообщений</span>
+                            <span>Последнее: вчера, 18:45</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="forum-sidebar">
+                <!-- Online Users -->
+                <div class="sidebar-widget">
+                    <div class="widget-title">
+                        <i class="fas fa-users"></i>
+                        Пользователи онлайн (234)
+                    </div>
+                    <div class="online-users" id="onlineUsers">
+                        <!-- Users will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Recent Topics -->
+                <div class="sidebar-widget">
+                    <div class="widget-title">
+                        <i class="fas fa-fire"></i>
+                        Горячие темы
+                    </div>
+                    <div class="recent-topics" id="recentTopics">
+                        <!-- Topics will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Forum Stats -->
+                <div class="sidebar-widget">
+                    <div class="widget-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Статистика
+                    </div>
+                    <div style="font-size: 0.9rem; line-height: 1.6;">
+                        <p><strong>Новых сообщений сегодня:</strong> 456</p>
+                        <p><strong>Новых тем сегодня:</strong> 23</p>
+                        <p><strong>Новых пользователей:</strong> 12</p>
+                        <p><strong>Самый активный:</strong> AudiMaster</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Audi 80 Club Russia</h3>
+                    <p>Официальное сообщество любителей и владельцев Audi 80 всех поколений в России.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Быстрые ссылки</h4>
+                    <ul>
+                        <li><a href="models.html">Модели</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="tuning.html">Тюнинг</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Поколения</h4>
+                    <ul>
+                        <li><a href="models.html#b1">Audi 80 B1 (1965-1972)</a></li>
+                        <li><a href="models.html#b2">Audi 80 B2 (1972-1979)</a></li>
+                        <li><a href="models.html#b3">Audi 80 B3 (1979-1986)</a></li>
+                        <li><a href="models.html#b4">Audi 80 B4 (1986-1996)</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@audi80club.ru</p>
+                        <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Audi 80 Club Russia. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Реклама</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="forum.js"></script>
+</body>
+</html>
