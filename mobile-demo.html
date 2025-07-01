@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audi 80 Club Russia - Мобильная демо</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .demo-section {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            color: #ea580c;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #ea580c, #dc2626);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        
+        .gallery-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .gallery-item {
+            aspect-ratio: 16/9;
+            background: linear-gradient(45deg, #ea580c, #dc2626);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ea580c;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            color: white;
+            text-align: center;
+            border-radius: 15px;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+        
+        .cta-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .download-steps {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: left;
+        }
+        
+        .step {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .step-number {
+            background: white;
+            color: #ea580c;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        
+        .contact-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">🚗 Audi 80 Club Russia</div>
+        <div class="subtitle">Мобильная версия портала</div>
+    </header>
+    
+    <div class="container">
+        <!-- Главные возможности -->
+        <div class="demo-section">
+            <div class="section-title">
+                <span class="emoji">✨</span>
+                Что включает сайт
+            </div>
+            <ul class="feature-list">
+                <li>
+                    <div class="feature-icon">🏠</div>
+                    <div>
+                        <strong>Главная страница</strong><br>
+                        <small>Карусель, статистика, навигация</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">🚙</div>
+                    <div>
+                        <strong>Каталог моделей B1-B4</strong><br>
+                        <small>Сравнение характеристик</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">📸</div>
+                    <div>
+                        <strong>Фотогалерея</strong><br>
+                        <small>20+ настоящих фото Audi 80</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">💬</div>
+                    <div>
+                        <strong>Полноценный форум</strong><br>
+                        <small>7 разделов обсуждений</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">📝</div>
+                    <div>
+                        <strong>Блог с новостями</strong><br>
+                        <small>Статьи и обзоры</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Предварительный просмотр галереи -->
+        <div class="demo-section">
+            <div class="section-title">
+                <span class="emoji">📸</span>
+                Превью фотогалереи
+            </div>
+            <div class="gallery-preview">
+                <div class="gallery-item">B1 1972<br>Классика</div>
+                <div class="gallery-item">B2 1978<br>Винтаж</div>
+                <div class="gallery-item">B3 Quattro<br>Легенда</div>
+                <div class="gallery-item">B4 Avant<br>Универсал</div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                В полной версии: lightbox просмотр, фильтрация, метаданные фото
+            </p>
+        </div>
+        
+        <!-- Статистика -->
+        <div class="demo-section">
+            <div class="section-title">
+                <span class="emoji">📊</span>
+                Статистика проекта
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">7+</div>
+                    <div>HTML страниц</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">3000+</div>
+                    <div>строк CSS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1500+</div>
+                    <div>строк JS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div>адаптивный</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Технические особенности -->
+        <div class="demo-section">
+            <div class="section-title">
+                <span class="emoji">⚡</span>
+                Технологии
+            </div>
+            <ul class="feature-list">
+                <li>
+                    <div class="feature-icon">📱</div>
+                    <div>
+                        <strong>Мобильная адаптация</strong><br>
+                        <small>Отлично работает на телефонах</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">🚀</div>
+                    <div>
+                        <strong>Быстрая загрузка</strong><br>
+                        <small>Оптимизированный код</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">🎨</div>
+                    <div>
+                        <strong>Современный дизайн</strong><br>
+                        <small>CSS3 анимации</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">⚙️</div>
+                    <div>
+                        <strong>Vanilla JavaScript</strong><br>
+                        <small>Без зависимостей</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Инструкция для мобильного -->
+        <div class="cta-section pulse">
+            <div class="cta-title">📱 Как открыть на телефоне</div>
+            <p>Следуйте простым шагам:</p>
+            
+            <div class="download-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>Скачайте ZIP архив <strong>audi80-club-russia.zip</strong></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>Распакуйте архив (приложение "Файлы" или "ES Explorer")</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>Найдите файл <strong>index.html</strong></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>Откройте через браузер (Chrome, Firefox, Safari)</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div>Наслаждайтесь полноценным сайтом! 🎉</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Альтернативные способы -->
+        <div class="demo-section">
+            <div class="section-title">
+                <span class="emoji">🌐</span>
+                Альтернативы для мобильных
+            </div>
+            <ul class="feature-list">
+                <li>
+                    <div class="feature-icon">📱</div>
+                    <div>
+                        <strong>GitHub Pages</strong><br>
+                        <small>Бесплатный хостинг в интернете</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">☁️</div>
+                    <div>
+                        <strong>Netlify Drop</strong><br>
+                        <small>Перетащите папку на netlify.com</small>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-icon">🔗</div>
+                    <div>
+                        <strong>Vercel</strong><br>
+                        <small>Автоматическое развертывание</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Контакты -->
+        <div class="demo-section">
+            <div class="section-title">
+                <span class="emoji">📞</span>
+                Поддержка
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="emoji">📧</span>
+                    info@audi80club.ru
+                </div>
+                <div class="contact-item">
+                    <span class="emoji">📱</span>
+                    +7 (495) 123-45-67
+                </div>
+                <div class="contact-item">
+                    <span class="emoji">📍</span>
+                    Москва, Россия
+                </div>
+                <div class="contact-item">
+                    <span class="emoji">💬</span>
+                    Telegram: @audi80club
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; padding: 2rem; color: #666;">
+            <p><strong>🚗 Создано с ❤️ для сообщества Audi 80</strong></p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+                Эта демо-страница адаптирована для мобильных устройств
+            </p>
+        </div>
+    </div>
+</body>
+</html>
