@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог Audi 80 Club - Новости, обзоры и технические статьи</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .blog-hero {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+        }
+        
+        .blog-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            padding: 80px 0;
+        }
+        
+        .blog-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .blog-post {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .blog-post.featured {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .blog-content {
+            padding: 2rem;
+        }
+        
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .blog-category {
+            background: #ea580c;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .blog-title {
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ea580c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .sidebar-widget {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .widget-title {
+            color: #ea580c;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .popular-post {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popular-post:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .popular-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        
+        .popular-content h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+        
+        .popular-date {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .categories-list li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .categories-list a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+        
+        .categories-list a:hover {
+            color: #ea580c;
+        }
+        
+        .category-count {
+            background: #f8f9fa;
+            color: #666;
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background: #f8f9fa;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background: #ea580c;
+            color: white;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #eee;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #ea580c;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .newsletter-signup {
+            background: linear-gradient(135deg, #ea580c, #dc2626);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter-input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .newsletter-btn {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            color: #ea580c;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .pagination-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: #333;
+            border: 2px solid #eee;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: #ea580c;
+            color: white;
+            border-color: #ea580c;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .blog-post.featured {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-meta {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .popular-post {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .popular-image {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-car"></i>
+                <span>Audi 80 Club</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="models.html" class="nav-link">Модели</a>
+                <a href="gallery.html" class="nav-link">Галерея</a>
+                <a href="tuning.html" class="nav-link">Тюнинг</a>
+                <a href="forum.html" class="nav-link">Форум</a>
+                <a href="blog.html" class="nav-link">Блог</a>
+                <a href="about.html" class="nav-link">О нас</a>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Блог Audi 80 Club</h1>
+            <p>Новости, технические статьи, обзоры и истории от сообщества</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-container">
+        <div class="container" style="display: contents;">
+            <main class="blog-main">
+                <!-- Featured Post -->
+                <article class="blog-post featured">
+                    <img src="https://via.placeholder.com/600x400/ea580c/ffffff?text=Главная+статья" alt="Главная статья" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-category">Техника</span>
+                            <span><i class="fas fa-calendar"></i> 15 декабря 2023</span>
+                            <span><i class="fas fa-eye"></i> 1,234 просмотра</span>
+                        </div>
+                        <h2 class="blog-title">Полное руководство по восстановлению двигателя Audi 80 B3</h2>
+                        <p class="blog-excerpt">
+                            Подробное пошаговое руководство по капитальному ремонту двигателя Audi 80 B3. 
+                            Рассматриваем все этапы: от разборки до сборки, выбор запчастей и специальных инструментов. 
+                            Практические советы от опытных мастеров и членов клуба.
+                        </p>
+                        <a href="#" class="btn btn-primary">Читать далее</a>
+                        <div class="blog-author">
+                            <div class="author-avatar">АМ</div>
+                            <div>
+                                <strong>Александр Михайлов</strong>
+                                <div>Механик, стаж 20 лет</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Regular Posts -->
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x250/ea580c/ffffff?text=Тюнинг+подвески" alt="Тюнинг подвески" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-category">Тюнинг</span>
+                            <span><i class="fas fa-calendar"></i> 12 декабря 2023</span>
+                            <span><i class="fas fa-eye"></i> 856 просмотров</span>
+                        </div>
+                        <h3 class="blog-title">Занижение Audi 80: выбор койловеров</h3>
+                        <p class="blog-excerpt">
+                            Сравнительный обзор популярных койловеров для Audi 80. Плюсы и минусы различных брендов, 
+                            установка и настройка. Практический опыт участников клуба.
+                        </p>
+                        <a href="#" class="btn btn-outline">Читать далее</a>
+                        <div class="blog-author">
+                            <div class="author-avatar">ДС</div>
+                            <div>
+                                <strong>Дмитрий Соколов</strong>
+                                <div>Владелец B4</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x250/ea580c/ffffff?text=История+модели" alt="История модели" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-category">История</span>
+                            <span><i class="fas fa-calendar"></i> 10 декабря 2023</span>
+                            <span><i class="fas fa-eye"></i> 642 просмотра</span>
+                        </div>
+                        <h3 class="blog-title">Редкие модификации Audi 80 B2</h3>
+                        <p class="blog-excerpt">
+                            Рассказываем о малоизвестных и редких версиях второго поколения Audi 80. 
+                            Специальные серии, ограниченные выпуски и уникальные модификации.
+                        </p>
+                        <a href="#" class="btn btn-outline">Читать далее</a>
+                        <div class="blog-author">
+                            <div class="author-avatar">ИК</div>
+                            <div>
+                                <strong>Игорь Козлов</strong>
+                                <div>Историк автомобилей</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x250/ea580c/ffffff?text=Электрика" alt="Электрика" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-category">Ремонт</span>
+                            <span><i class="fas fa-calendar"></i> 8 декабря 2023</span>
+                            <span><i class="fas fa-eye"></i> 523 просмотра</span>
+                        </div>
+                        <h3 class="blog-title">Диагностика электрических неисправностей</h3>
+                        <p class="blog-excerpt">
+                            Подробное руководство по поиску и устранению электрических неисправностей в Audi 80. 
+                            Схемы, методы диагностики и практические советы.
+                        </p>
+                        <a href="#" class="btn btn-outline">Читать далее</a>
+                        <div class="blog-author">
+                            <div class="author-avatar">ВП</div>
+                            <div>
+                                <strong>Владимир Петров</strong>
+                                <div>Автоэлектрик</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x250/ea580c/ffffff?text=Встреча+клуба" alt="Встреча клуба" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-category">События</span>
+                            <span><i class="fas fa-calendar"></i> 5 декабря 2023</span>
+                            <span><i class="fas fa-eye"></i> 789 просмотров</span>
+                        </div>
+                        <h3 class="blog-title">Отчет с зимней встречи клуба в Москве</h3>
+                        <p class="blog-excerpt">
+                            Фотоотчет и впечатления участников традиционной зимней встречи Audi 80 Club Russia. 
+                            Выставка автомобилей, технические доклады и общение единомышленников.
+                        </p>
+                        <a href="#" class="btn btn-outline">Читать далее</a>
+                        <div class="blog-author">
+                            <div class="author-avatar">МА</div>
+                            <div>
+                                <strong>Марина Антонова</strong>
+                                <div>Организатор встреч</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="pagination-btn">❮ Предыдущая</a>
+                    <a href="#" class="pagination-btn active">1</a>
+                    <a href="#" class="pagination-btn">2</a>
+                    <a href="#" class="pagination-btn">3</a>
+                    <a href="#" class="pagination-btn">4</a>
+                    <a href="#" class="pagination-btn">Следующая ❯</a>
+                </div>
+            </main>
+
+            <aside class="blog-sidebar">
+                <!-- Search -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Поиск по блогу</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Введите запрос...">
+                    </div>
+                </div>
+
+                <!-- Popular Posts -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Популярные статьи</h3>
+                    <div class="popular-post">
+                        <img src="https://via.placeholder.com/80x80/ea580c/ffffff?text=1" alt="Популярная статья" class="popular-image">
+                        <div class="popular-content">
+                            <h4>Секреты долговечности двигателей Audi 80</h4>
+                            <div class="popular-date">2 декабря 2023</div>
+                        </div>
+                    </div>
+                    <div class="popular-post">
+                        <img src="https://via.placeholder.com/80x80/ea580c/ffffff?text=2" alt="Популярная статья" class="popular-image">
+                        <div class="popular-content">
+                            <h4>Лучшие модификации для повседневного использования</h4>
+                            <div class="popular-date">28 ноября 2023</div>
+                        </div>
+                    </div>
+                    <div class="popular-post">
+                        <img src="https://via.placeholder.com/80x80/ea580c/ffffff?text=3" alt="Популярная статья" class="popular-image">
+                        <div class="popular-content">
+                            <h4>Quattro vs переднепривод: сравнение в реальных условиях</h4>
+                            <div class="popular-date">25 ноября 2023</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Категории</h3>
+                    <ul class="categories-list">
+                        <li><a href="#">Техника <span class="category-count">24</span></a></li>
+                        <li><a href="#">Тюнинг <span class="category-count">18</span></a></li>
+                        <li><a href="#">Ремонт <span class="category-count">32</span></a></li>
+                        <li><a href="#">История <span class="category-count">12</span></a></li>
+                        <li><a href="#">События <span class="category-count">8</span></a></li>
+                        <li><a href="#">Обзоры <span class="category-count">15</span></a></li>
+                        <li><a href="#">Новости <span class="category-count">6</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- Tags -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Теги</h3>
+                    <div class="tags-cloud">
+                        <a href="#" class="tag">B1</a>
+                        <a href="#" class="tag">B2</a>
+                        <a href="#" class="tag">B3</a>
+                        <a href="#" class="tag">B4</a>
+                        <a href="#" class="tag">Quattro</a>
+                        <a href="#" class="tag">Двигатель</a>
+                        <a href="#" class="tag">Подвеска</a>
+                        <a href="#" class="tag">Электрика</a>
+                        <a href="#" class="tag">Тормоза</a>
+                        <a href="#" class="tag">Коробка</a>
+                        <a href="#" class="tag">Кузов</a>
+                        <a href="#" class="tag">Интерьер</a>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sidebar-widget newsletter-signup">
+                    <h3 class="widget-title">Подписка на новости</h3>
+                    <p>Получайте уведомления о новых статьях и событиях клуба</p>
+                    <input type="email" class="newsletter-input" placeholder="Ваш email">
+                    <button class="newsletter-btn">Подписаться</button>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Audi 80 Club Russia</h3>
+                    <p>Официальное сообщество любителей и владельцев Audi 80 всех поколений в России.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Быстрые ссылки</h4>
+                    <ul>
+                        <li><a href="models.html">Модели</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="tuning.html">Тюнинг</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Поколения</h4>
+                    <ul>
+                        <li><a href="#">Audi 80 B1 (1965-1972)</a></li>
+                        <li><a href="#">Audi 80 B2 (1972-1979)</a></li>
+                        <li><a href="#">Audi 80 B3 (1979-1986)</a></li>
+                        <li><a href="#">Audi 80 B4 (1986-1996)</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@audi80club.ru</p>
+                        <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Audi 80 Club Russia. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Реклама</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
